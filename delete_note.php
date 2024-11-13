@@ -1,13 +1,26 @@
 <?php
 $notesDir = './notes/';
 $noteId = isset($_GET['id']) ? $_GET['id'] : null;
-$noteFile = $notesDir . $noteId . '.json';
 
-if ($noteId && file_exists($noteFile)) {
-  unlink($noteFile);
+if ($noteId) {
+  $noteFile = $notesDir . $noteId . '.json';
 
-  header('Location: view_notes.php');
-  exit();
+  if (file_exists($noteFile)) {
+    $noteData = json_decode(file_get_contents($noteFile), true);
+
+    // Xóa file note
+    unlink($noteFile);
+
+    // Xóa file ảnh nếu tồn tại
+    if (isset($noteData['image']) && file_exists($noteData['image'])) {
+      unlink($noteData['image']);
+    }
+
+    header('Location: view_notes.php');
+    exit();
+  } else {
+    echo "Note not found!";
+  }
 } else {
-  echo "Note not found!";
+  echo "Invalid note ID!";
 }
