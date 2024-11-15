@@ -211,6 +211,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
               <div class="card-body">
                 <h5 class="card-title"><?php echo htmlspecialchars($note['title']); ?></h5>
                 <p><strong>Timestamp:</strong> <?php echo htmlspecialchars($note['timestamp']); ?></p>
+                <hr>
                 <div>
                   <strong>Tags:</strong>
                   <?php if (!empty($note['tags'])): ?>
@@ -229,7 +230,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                   </div>
                 <?php endif; ?>
 
-                <hr>
+                <?php if (!empty($note['tasks'])): ?>
+                  <hr>
+                <?php endif; ?>
                 <ul id="task-container" class="list-group">
                   <?php foreach ($note['tasks'] as $index => $task): ?>
                     <li class="list-group-item d-flex align-items-center justify-content-between">
@@ -253,7 +256,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                   <hr>
                   <div class="mt-3">
                     <strong>Image:</strong><br>
-                    <img src="<?php echo htmlspecialchars($note['image']); ?>" alt="Note Image">
+                    <a href="<?php echo htmlspecialchars($note['image']); ?>">
+                      <img src="<?php echo htmlspecialchars($note['image']); ?>" alt="Note Image">
+                    </a>
                   </div>
                 <?php endif; ?>
               </div>
