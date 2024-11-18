@@ -10,7 +10,58 @@ $filteredMonth = $_GET['month'] ?? date('Y-m');
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chấm Công</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="./css/styles.css">
+  <style>
+    .list-group-item {
+      position: relative;
+    }
+
+    .list-group-item .btn-danger {
+      position: absolute;
+      top: 5px;
+      right: 10px;
+    }
+
+    .show-container {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .items {
+      display: flex;
+      flex-grow: 1;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    .delete-work-record {
+      display: none;
+    }
+
+    .list-group-item:hover {
+      background-color: #f1f1f1;
+    }
+
+    .list-group-item:hover .delete-work-record {
+      display: block;
+    }
+
+    @media (max-width: 576px) {
+      .show-container {
+        flex-direction: column !important;
+      }
+
+      .items {
+        display: flex;
+        flex-grow: 1;
+        flex-direction: column;
+        justify-content: flex-start;
+      }
+
+      .div-date {
+        border-bottom: 1px solid rgb(175, 175, 175);
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -79,7 +130,7 @@ $filteredMonth = $_GET['month'] ?? date('Y-m');
                   <form method='POST' action='delete_work_record.php' class='position-absolute top-0 end-0'>
                     <input type='hidden' name='entry_id' value='{$entry['id']}'>
                     <input type='hidden' name='date-ts' value='{$filteredMonth}'>
-                    <button type='submit' class='btn btn-danger btn-sm' onclick='confirmDelete(event)'>Xóa</button>
+                    <button type='submit' class='btn btn-danger btn-sm delete-work-record' onclick='confirmDelete(event)'>Xóa</button>
                   </form>
                 </li>";
         }
