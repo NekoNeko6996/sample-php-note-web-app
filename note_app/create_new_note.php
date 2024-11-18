@@ -10,14 +10,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   if (!empty($_FILES['image']['name'])) {
     $fileName = basename($_FILES['image']['name']);
-    $uploadFilePath = $uploadDir . $fileName;
+    $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
+    $uniqueFileName = uniqid('image_', true) . '.' . $fileExtension;
+
+    $uploadFilePath = $uploadDir . $uniqueFileName;
 
     if (move_uploaded_file($_FILES['image']['tmp_name'], $uploadFilePath)) {
       $uploadedFilePath = $uploadFilePath;
     } else {
-      echo "Lỗi khi tải lên ảnh.";
+      echo "<script>alert('Error during upload file')</script>";
     }
   }
+
 
   $id_note = uniqid();
 

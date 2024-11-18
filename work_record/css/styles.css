@@ -1,0 +1,36 @@
+.list-group-item {
+  position: relative;
+}
+
+.list-group-item .btn-danger {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+}
+
+.show-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.items {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+@media (max-width: 576px) {
+  .show-container {
+    flex-direction: column !important;
+  }
+  .items {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  .div-date {
+    border-bottom: 1px solid rgb(175, 175, 175);
+  }
+}
