@@ -1,5 +1,6 @@
 <?php
 $filteredMonth = $_GET['month'] ?? date('Y-m');
+$base_salary = 15000;
 ?>
 
 <!DOCTYPE html>
@@ -11,6 +12,7 @@ $filteredMonth = $_GET['month'] ?? date('Y-m');
   <title>Chấm Công</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
+    /* CSS giữ nguyên như cũ */
     .list-group-item {
       position: relative;
     }
@@ -60,6 +62,22 @@ $filteredMonth = $_GET['month'] ?? date('Y-m');
       .div-date {
         border-bottom: 1px solid rgb(175, 175, 175);
       }
+
+      .info-item {
+        margin-bottom: 5px;
+      }
+
+      .list-group-item.flex-wrap .info-item {
+        flex: 1 1 30%;
+      }
+
+      @media (max-width: 576px) {
+        .list-group-item.flex-wrap .info-item {
+          flex: 1 1 100%;
+          margin-bottom: 10px;
+        }
+      }
+
     }
   </style>
 </head>
@@ -93,31 +111,50 @@ $filteredMonth = $_GET['month'] ?? date('Y-m');
           return strtotime($b['date']) - strtotime($a['date']);
         });
 
-        $startFilterDate = date('Y-m-05', strtotime($filteredMonth));
-        $endFilterDate = date('Y-m-05', strtotime($filteredMonth . ' +1 month'));
+        $startFilterDate = date('Y-m-01', strtotime($filteredMonth));
+        $endFilterDate = date('Y-m-01', strtotime($filteredMonth . ' +1 month'));
 
         foreach ($timesheets as $entry) {
           if ($entry['date'] < $startFilterDate || $entry['date'] >= $endFilterDate) {
             continue;
           }
-          $start = new DateTime($entry['start_time']);
-          $end = new DateTime($entry['end_time']);
-          $interval = $start->diff($end);
-          $hours = $interval->h + ($interval->i / 60);
+
+          $start = DateTime::createFromFormat('Y-m-d\TH:i', $entry['start_time']);
+          $end = DateTime::createFromFormat('Y-m-d\TH:i', $entry['end_time']);
+
+          if (!$start || !$end) {
+            echo "Invalid date format: start={$entry['start_time']}, end={$entry['end_time']}<br>";
+            continue;
+          }
+
+          $durationInSeconds = $end->getTimestamp() - $start->getTimestamp();
+          $hours = $durationInSeconds / 3600;
           $totalHours += $hours;
         }
 
-        echo "<li class='list-group-item d-flex flex-row justify-content-between'><strong>Tổng thời gian:</strong> " . number_format($totalHours, 2) . " giờ</li>";
+
+
+        echo "<li class='list-group-item d-flex flex-row justify-content-between align-items-center flex-wrap'>
+          <div class='info-item'><strong>Tổng thời gian:</strong> " . number_format($totalHours, 2) . " giờ</div>
+          <div class='info-item'><strong>Lương cơ bản:</strong> " . number_format($base_salary, 0) . " đồng/giờ</div>
+          <div class='info-item'><strong>Tổng lương dự kiến:</strong> " . number_format($totalHours * $base_salary, 0) . " đồng</div>
+        </li>";
+
+
 
         foreach ($timesheets as $entry) {
           if ($entry['date'] < $startFilterDate || $entry['date'] >= $endFilterDate) {
             continue;
           }
 
-          $start = new DateTime($entry['start_time']);
-          $end = new DateTime($entry['end_time']);
-          $interval = $start->diff($end);
-          $hours = $interval->h + ($interval->i / 60);
+          $start = DateTime::createFromFormat('Y-m-d\TH:i', $entry['start_time']);
+          $end = DateTime::createFromFormat('Y-m-d\TH:i', $entry['end_time']);
+
+          if (!$start || !$end)
+            continue;
+
+          $durationInSeconds = $end->getTimestamp() - $start->getTimestamp();
+          $hours = $durationInSeconds / 3600;
 
           echo "<li class='list-group-item position-relative'>
                   <div class='d-flex flex-row flex-wrap show-container'>

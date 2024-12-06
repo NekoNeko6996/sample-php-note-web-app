@@ -24,11 +24,11 @@
       </div>
       <div class="mb-3">
         <label for="start_time" class="form-label">Giờ bắt đầu</label>
-        <input type="time" id="start_time" name="start_time" class="form-control" required>
+        <input type="datetime-local" id="start_time" name="start_time" class="form-control" required>
       </div>
       <div class="mb-3">
         <label for="end_time" class="form-label">Giờ kết thúc</label>
-        <input type="time" id="end_time" name="end_time" class="form-control" required>
+        <input type="datetime-local" id="end_time" name="end_time" class="form-control" required>
       </div>
       <div class="mb-3">
         <label for="note" class="form-label">Ghi chú</label>
