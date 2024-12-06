@@ -12,15 +12,8 @@ $base_salary = 15000;
   <title>Chấm Công</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    /* CSS giữ nguyên như cũ */
     .list-group-item {
       position: relative;
-    }
-
-    .list-group-item .btn-danger {
-      position: absolute;
-      top: 5px;
-      right: 10px;
     }
 
     .show-container {
@@ -35,16 +28,8 @@ $base_salary = 15000;
       justify-content: space-between;
     }
 
-    .delete-work-record {
-      display: none;
-    }
-
     .list-group-item:hover {
       background-color: #f1f1f1;
-    }
-
-    .list-group-item:hover .delete-work-record {
-      display: block;
     }
 
     @media (max-width: 576px) {
@@ -70,14 +55,21 @@ $base_salary = 15000;
       .list-group-item.flex-wrap .info-item {
         flex: 1 1 30%;
       }
+    }
 
-      @media (max-width: 576px) {
-        .list-group-item.flex-wrap .info-item {
-          flex: 1 1 100%;
-          margin-bottom: 10px;
-        }
+    #item-btn-container {
+      display: none;
+    }
+
+    .list-group-item:hover>#item-btn-container {
+      display: block;
+    }
+
+    @media (max-width: 576px) {
+      .list-group-item.flex-wrap .info-item {
+        flex: 1 1 100%;
+        margin-bottom: 10px;
       }
-
     }
   </style>
 </head>
@@ -157,19 +149,18 @@ $base_salary = 15000;
           $hours = $durationInSeconds / 3600;
 
           echo "<li class='list-group-item position-relative'>
-                  <div class='d-flex flex-row flex-wrap show-container'>
-                    <div class='items div-date'><strong>Ngày:</strong> <span class='me-2'>{$entry['date']}</span></div> 
-                    <div class='items'><strong>Bắt đầu:</strong> <span class='me-2'>{$entry['start_time']}</span></div> 
-                    <div class='items'><strong>Kết thúc:</strong> <span class='me-2'>{$entry['end_time']}</span></div> "
+          <div class='d-flex flex-row flex-wrap show-container'>
+            <div class='items div-date'><strong>Ngày:</strong> <span class='me-2'>{$entry['date']}</span></div>
+            <div class='items'><strong>Bắt đầu:</strong> <span class='me-2'>{$entry['start_time']}</span></div>
+            <div class='items'><strong>Kết thúc:</strong> <span class='me-2'>{$entry['end_time']}</span></div> "
             . (empty($entry['note']) ? '' : "<div class='items'><strong>Ghi chú:</strong> <span class='me-2'>{$entry['note']}</span></div>")
             . "</div>
-                  <div class='items'><strong>Tổng: </strong><strong> " . number_format($hours, 2) . " giờ</strong></div>
-                  <form method='POST' action='delete_work_record.php' class='position-absolute top-0 end-0'>
-                    <input type='hidden' name='entry_id' value='{$entry['id']}'>
-                    <input type='hidden' name='date-ts' value='{$filteredMonth}'>
-                    <button type='submit' class='btn btn-danger btn-sm delete-work-record' onclick='confirmDelete(event)'>Xóa</button>
-                  </form>
-                </li>";
+            <div class='items'><strong>Tổng: </strong><strong> " . number_format($hours, 2) . " giờ</strong></div>
+            <div class='position-absolute top-0 end-0' id='item-btn-container' style='margin: 5px;'>
+              <button type='button' class='btn btn-danger btn-sm' onclick='confirmDelete(\"" . "{$entry['id']}\"" . ",\"" . addslashes($filteredMonth) . "\")'>Xóa</button>
+              <button type='button' class='btn btn-warning btn-sm' onclick='confirmEdit(\"" . "{$entry['id']}\"" . ",\"" . addslashes($filteredMonth) . "\")'>Edit</button>
+            </div>
+          </li>";
         }
       }
       ?>
@@ -177,11 +168,39 @@ $base_salary = 15000;
   </div>
 
   <script>
-    function confirmDelete(event) {
+    function confirmDelete(id, date_ts) {
       const confirmation = confirm('Bạn có chắc chắn muốn xóa bản ghi này?');
       if (!confirmation) {
-        event.preventDefault();
+        return;
       }
+      fetch('delete_work_record.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          entry_id: id,
+          date_ts: date_ts
+        })
+      })
+        .then(response => {
+          if (response.ok) {
+            window.location.reload();
+          } else {
+            alert('Có lỗi xảy ra khi xóa bản ghi.');
+          }
+        })
+        .catch(error => {
+          console.error('Lỗi khi xóa bản ghi:', error);
+        });
+    }
+
+    function confirmEdit(id, date_ts) {
+      const confirmation = confirm('Bạn có chắc chắn muốn sửa bản ghi này?');
+      if (!confirmation) {
+        return;
+      }
+      window.location.href = `edit_work_record.php?id=${id}&date_ts=${date_ts}`;
     }
   </script>
 </body>
