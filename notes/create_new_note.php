@@ -5,7 +5,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $content = $_POST['content'] ?? '';
   $tasks = $_POST['task_labels'] ?? [];
 
-  $uploadDir = './resources/img/';
+  $readDir = 'resources/img/';
+  $uploadDir = __DIR__ . '/resources/img/';
   $uploadedFilePath = '';
 
   if (!empty($_FILES['image']['name'])) {
@@ -14,6 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $uniqueFileName = uniqid('image_', true) . '.' . $fileExtension;
 
     $uploadFilePath = $uploadDir . $uniqueFileName;
+    $readDir .= $uniqueFileName;
 
     if (move_uploaded_file($_FILES['image']['tmp_name'], $uploadFilePath)) {
       $uploadedFilePath = $uploadFilePath;
@@ -31,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     'tags' => $tags,
     'content' => $content,
     'tasks' => [],
-    'image' => $uploadedFilePath,
+    'image' => $readDir,
     'timestamp' => date('Y-m-d H:i:s')
   ];
 
@@ -48,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   // Lưu JSON vào file
   $noteData = json_encode($note, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-  file_put_contents('./notes/' . $id_note . '.json', $noteData);
+  file_put_contents('./notes/notes/' . $id_note . '.json', $noteData);
 
   echo "<div class='alert alert-success'>Note saved successfully!</div>";
 }
@@ -94,13 +96,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">Notes App</a>
-      <a class="nav-link active" href="view_notes.php">Home</a>
+      <a class="nav-link active" href="view">Home</a>
     </div>
   </nav>
 
   <div class="container mt-5">
     <h1 class="mb-4">Create Note</h1>
-    <form action="create_new_note.php" method="POST" enctype="multipart/form-data" class="card p-4 shadow">
+    <form action="create" method="POST" enctype="multipart/form-data" class="card p-4 shadow">
       <div class="mb-3">
         <label for="title" class="form-label">Title</label>
         <input type="text" name="title" id="title" class="form-control" required>

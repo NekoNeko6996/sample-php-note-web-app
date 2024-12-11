@@ -1,0 +1,14 @@
+RewriteEngine On
+
+# Chỉ rewrite nếu không phải tệp hoặc thư mục thực
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Rewrite API route
+RewriteRule ^public/api/([a-zA-Z0-9_-]+)$ api_route.php?route=$1 [L,QSA]
+
+# Rewrite app routes
+RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)$ view_route.php?app=$1&route=$2 [L,QSA]
+
+# Rewrite root URL to home.php
+RewriteRule ^$ home.php [L,QSA]

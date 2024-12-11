@@ -4,7 +4,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $taskIndex = $_POST['task_index'] ?? '';
   $taskStatus = $_POST['task_status'] ?? '';
 
-  $notesDir = './notes/';
+  $notesDir = './notes/notes/';
   $filePath = $notesDir . $noteId . '.json';
 
   if (file_exists($filePath)) {

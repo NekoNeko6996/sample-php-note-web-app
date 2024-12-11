@@ -16,7 +16,7 @@ if ($noteId) {
       unlink($noteData['image']);
     }
 
-    header('Location: view_notes.php');
+    header('Location: view');
     exit();
   } else {
     echo "Note not found!";

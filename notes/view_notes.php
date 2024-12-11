@@ -1,5 +1,5 @@
 <?php
-$notesDir = './notes/';
+$notesDir = './notes/notes/';
 $notes = [];
 $tags = [];
 $selectedTags = isset($_GET['tags']) ? $_GET['tags'] : [];
@@ -13,6 +13,8 @@ if (is_dir($notesDir)) {
     if (pathinfo($file, PATHINFO_EXTENSION) === 'json') {
       $noteData = file_get_contents($notesDir . $file);
       $note = json_decode($noteData, true);
+
+      var_dump($note);
 
       if ($searchQuery && (stripos($note['title'], $searchQuery) === false) && (stripos($note['content'], $searchQuery) === false)) {
         continue;
@@ -39,7 +41,7 @@ if (!empty($selectedTags)) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'delete_task') {
   $noteId = $_GET['id'] ?? null; // Lấy ID từ request
-  $notesDir = './notes/';
+  $notesDir = './notes/notes/';
   $noteFile = $notesDir . $noteId . '.json';
   $taskId = $_POST['taskId'];
 
@@ -170,7 +172,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
   <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">Notes App</a>
-      <a href="create_new_note.php" class="btn btn-primary">Add New Note</a>
+      <a href="create" class="btn btn-primary">Add New Note</a>
     </div>
   </nav>
 
@@ -178,7 +180,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     <h1 class="mb-4">All Notes</h1>
 
     <!-- Search and Filter Form -->
-    <form method="GET" action="view_notes.php" class="mb-4">
+    <form method="GET" action="view" class="mb-4">
       <div class="row" id="search-form-row">
         <div class="col-md-4">
           <input type="text" name="search" class="form-control" placeholder="Search notes..."
@@ -283,7 +285,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
       taskText.classList.toggle('task-completed', taskStatus);
       // Update the task status on the server
-      fetch('update_task_status.php', {
+      fetch('update_task', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: new URLSearchParams({
@@ -305,7 +307,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
       if (!confirm('Are you sure you want to delete this note?')) {
         return;
       }
-      location.href = `delete_note.php?id=${id}`;
+      location.href = `delete?id=${id}`;
     }
 
     function removeTask(button, taskId, noteId) {

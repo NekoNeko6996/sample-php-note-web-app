@@ -1,6 +1,7 @@
 <?php
 $notesDir = './notes/';
-$uploadsDir = './resources/img/';
+$uploadsDir = __DIR__ . '/resources/img/';
+$readDir = 'resources/img/';
 $noteId = isset($_GET['id']) ? $_GET['id'] : null;
 $noteFile = $notesDir . $noteId . '.json';
 $note = [];
@@ -41,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       if (!empty($note['image']) && file_exists($note['image'])) {
         unlink($note['image']);
       }
-      $note['image'] = $uploadFilePath;
+      $note['image'] = $readDir . $fileName;
     } else {
       echo "<div class='alert alert-danger'>Error uploading image.</div>";
     }
@@ -55,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 
   file_put_contents($noteFile, json_encode($note, JSON_PRETTY_PRINT));
-  header('Location: view_notes.php');
+  header('Location: view');
   exit();
 }
 ?>
@@ -103,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
     <div class="container-fluid">
-      <a class="navbar-brand" href="view_notes.php">Notes App</a>
+      <a class="navbar-brand" href="view">Notes App</a>
     </div>
   </nav>
 
