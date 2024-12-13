@@ -1,0 +1,32 @@
+[
+    {
+        "id": "675bcc0783973",
+        "category": "cho m\u01b0\u1ee3n",
+        "amount": 200000,
+        "currency": "VND",
+        "date": "2024-12-09",
+        "description": "cho anh chinh m\u01b0\u1ee3n 200k",
+        "payment_method": "cash",
+        "location": "nh\u00e0 h\u00e0ng h\u01b0ng ph\u00fa t\u1eedu",
+        "tags": [
+            "cho m\u01b0\u1ee3n"
+        ],
+        "notes": "l\u1ea5y tr\u01b0\u1edbc t\u1ebft",
+        "attachments": []
+    },
+    {
+        "id": "675bcc60d93d4",
+        "category": "mua \u0111\u1ed3 d\u00f9ng",
+        "amount": 13000,
+        "currency": "VND",
+        "date": "2024-12-11",
+        "description": "mua h\u1ed9p nhang mu\u1ed7i cho qu\u00e1n",
+        "payment_method": " ti\u1ec1n m\u1eb7t",
+        "location": "nh\u00e0 h\u00e0ng h\u01b0ng ph\u00fa t\u1eedu",
+        "tags": [
+            "cho m\u01b0\u1ee3n"
+        ],
+        "notes": "",
+        "attachments": []
+    }
+]

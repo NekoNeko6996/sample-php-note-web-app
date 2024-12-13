@@ -1,5 +1,5 @@
 <?php
-$notesDir = './notes/';
+$notesDir = './notes/notes/';
 $noteId = isset($_GET['id']) ? $_GET['id'] : null;
 
 if ($noteId) {

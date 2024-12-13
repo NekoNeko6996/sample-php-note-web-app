@@ -2,7 +2,7 @@
 $entryId = $_GET['id'];
 $dateTs = $_GET['date_ts'];
 
-$dataFile = 'data/ts-' . $dateTs . '.json';
+$dataFile = './workrecord/data/ts-' . $dateTs . '.json';
 if (file_exists($dataFile)) {
   $jsonData = file_get_contents($dataFile);
   $timesheets = json_decode($jsonData, true);
@@ -36,15 +36,15 @@ if (file_exists($dataFile)) {
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <nav class="navbar navbar-expand-lg navbar-light border-bottom">
     <div class="container-fluid">
-      <a class="navbar-brand" href="view_work_record.php">Quay Lại</a>
+      <a class="navbar-brand" href="view">Quay Lại</a>
     </div>
   </nav>
 
   <div class="container mt-5">
     <h1 class="text-center">Chỉnh Sửa Chấm Công</h1>
-    <form action="edit_work_record.php?id=<?= $entryId ?>&date_ts=<?= $dateTs ?>" method="post" class="mt-4">
+    <form action="edit?id=<?= $entryId ?>&date_ts=<?= $dateTs ?>" method="post" class="mt-4">
       <input type="hidden" name="entry_id" value="<?= $entry['id'] ?>">
       <input type="hidden" name="date_ts" value="<?= $dateTs ?>">
 
@@ -90,7 +90,7 @@ if (file_exists($dataFile)) {
     // Lưu lại dữ liệu vào file
     file_put_contents($dataFile, json_encode(array_values($timesheets), JSON_PRETTY_PRINT));
 
-    header('Location: view_work_record.php');
+    header('Location: view');
     exit;
   }
   ?>

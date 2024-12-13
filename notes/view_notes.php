@@ -14,8 +14,6 @@ if (is_dir($notesDir)) {
       $noteData = file_get_contents($notesDir . $file);
       $note = json_decode($noteData, true);
 
-      var_dump($note);
-
       if ($searchQuery && (stripos($note['title'], $searchQuery) === false) && (stripos($note['content'], $searchQuery) === false)) {
         continue;
       }

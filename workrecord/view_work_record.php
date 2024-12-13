@@ -77,9 +77,12 @@ $base_salary = 15000;
 <body>
   <nav class="navbar navbar-expand-lg navbar-light border-bottom">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Chấm Công</a>
       <div class="d-flex">
-        <a href="new_work_record.php" class="btn btn-primary">Thêm Chấm Công</a>
+        <a class="navbar-brand" href="#">Chấm Công</a>
+        <a href="stat" class="navbar-brand">Thống Kê</a>
+      </div>
+      <div class="d-flex">
+        <a href="create" class="btn btn-primary">Thêm Chấm Công</a>
       </div>
     </div>
   </nav>
@@ -93,7 +96,7 @@ $base_salary = 15000;
 
     <ul class="list-group" id="timesheet-list">
       <?php
-      $dataFile = 'data/ts-' . $filteredMonth . '.json';
+      $dataFile = './workrecord/data/ts-' . $filteredMonth . '.json';
       $totalHours = 0;
 
       if (file_exists($dataFile)) {
@@ -166,6 +169,7 @@ $base_salary = 15000;
       ?>
     </ul>
   </div>
+  <br/>
 
   <script>
     function confirmDelete(id, date_ts) {
@@ -173,7 +177,7 @@ $base_salary = 15000;
       if (!confirmation) {
         return;
       }
-      fetch('delete_work_record.php', {
+      fetch('delete', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -200,7 +204,7 @@ $base_salary = 15000;
       if (!confirmation) {
         return;
       }
-      window.location.href = `edit_work_record.php?id=${id}&date_ts=${date_ts}`;
+      window.location.href = `edit?id=${id}&date_ts=${date_ts}`;
     }
   </script>
 </body>

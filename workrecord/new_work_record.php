@@ -9,15 +9,15 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <nav class="navbar navbar-expand-lg navbar-light border-bottom">
     <div class="container-fluid">
-      <a class="navbar-brand" href="view_work_record.php">Quay Lại</a>
+      <a class="navbar-brand" href="view">Quay Lại</a>
     </div>
   </nav>
 
   <div class="container mt-5">
     <h1 class="text-center">Thêm Chấm Công</h1>
-    <form action="work_record.php" method="post" class="mt-4">
+    <form action="add" method="post" class="mt-4">
       <div class="mb-3">
         <label for="date" class="form-label">Ngày</label>
         <input type="date" id="date" name="date" class="form-control" value="<?php echo date('Y-m-d'); ?>" required>

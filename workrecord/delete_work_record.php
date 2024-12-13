@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $entryId = $data['entry_id'];
     $dateTs = $data['date_ts'];
 
-    $dataFile = 'data/ts-' . $dateTs . '.json';
+    $dataFile = './workrecord/data/ts-' . $dateTs . '.json';
 
     if (file_exists($dataFile)) {
       // Đọc dữ liệu từ file

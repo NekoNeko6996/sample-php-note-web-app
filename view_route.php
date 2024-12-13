@@ -6,7 +6,7 @@ $requestedRoute = $_GET['route'] ?? 'view';
 
 
 // route list
-$NoCheckedAllowedRoutes = ['notes', 'workrecord'];
+$NoCheckedAllowedRoutes = ['notes', 'workrecord', 'spending'];
 
 $routes = [
   'notes' => [
@@ -19,9 +19,17 @@ $routes = [
   'workrecord' => [
     'view' => 'workrecord/view_work_record.php',
     'create' => 'workrecord/new_work_record.php',
+    'add' => 'workrecord/work_record.php',
     'edit' => 'workrecord/edit_work_record.php',
     'delete' => 'workrecord/delete_work_record.php',
     'stat' => 'workrecord/data_stat.php',
+  ],
+  'spending' => [
+    'view' => 'spending/view.php',
+    'create' => 'spending/create.php',
+    'delete' => 'spending/delete.php',
+    'edit' => 'spending/edit.php',
+    'stat' => 'spending/stat.php',
   ]
 ];
 

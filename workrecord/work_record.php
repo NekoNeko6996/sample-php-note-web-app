@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     'note' => $note
   ];
 
-  $dataFile = 'data/ts-' . date('Y-m') . '.json';
+  $dataFile = './workrecord/data/ts-' . date('Y-m') . '.json';
 
   if (!file_exists('data')) {
     mkdir('data', 0777, true);
@@ -29,6 +29,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   file_put_contents($dataFile, json_encode($timesheets, JSON_PRETTY_PRINT));
 
-  header('Location: view_work_record.php');
+  header('Location: view');
 }
 ?>
