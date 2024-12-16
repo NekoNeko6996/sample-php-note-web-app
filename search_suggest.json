@@ -1,0 +1,5 @@
+{
+  "spending": "/spending/view",
+  "note": "/notes/view",
+  "work record": "/workrecord/view"
+}

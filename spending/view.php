@@ -24,39 +24,7 @@ $paginated_spendings = array_slice($filtered_spendings, $start_index, $items_per
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Spending Tracker</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    .card {
-      position: relative;
-      overflow: hidden;
-      border-radius: 12px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    .card:hover .action-buttons {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .action-buttons {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      display: flex;
-      gap: 5px;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s ease, visibility 0.3s ease;
-    }
-
-    .action-buttons .btn {
-      padding: 5px 10px;
-      font-size: 0.875rem;
-    }
-
-    .tag-content {
-      font-size: 1.05rem;
-    }
-  </style>
+  <link rel="stylesheet" href="css/view.css">
 </head>
 
 <body>
