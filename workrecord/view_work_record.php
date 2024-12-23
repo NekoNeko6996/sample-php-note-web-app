@@ -126,6 +126,11 @@ $search_suggestions = json_decode($search_suggestions, true);
       <span class='input-group-text'><strong>Lương cơ bản</strong></span>
       <div class='form-control text-end'><?= number_format($base_salary, 0) ?> đồng/giờ</div>
     </div>
+    <div class="input-group align-items-center mb-2">
+      <span class="input-group-text"><strong>Trung bình:</strong></span>
+      <div class="form-control text-end"><?= number_format(($totalHours * $base_salary) / intval(date("d")), 0); ?> đồng
+      </div>
+    </div>
     <div class='input-group align-items-center mb-3'>
       <span class='input-group-text'><strong>Tổng lương dự kiến</strong></span>
       <div class='form-control text-end'><?= number_format($totalHours * $base_salary, 0) ?> đồng</div>
@@ -212,6 +217,7 @@ $search_suggestions = json_decode($search_suggestions, true);
                 <p><strong>Ghi chú:</strong> <?= $entry['note'] ?></p>
               <?php } ?>
               <p><strong>Tổng:</strong> <?= number_format($hours, 2) ?> giờ</p>
+              <p><strong>Kiếm được:</strong> <?= number_format($hours * $base_salary) ?> đồng</p>
             </div>
           </div>
         <?php } ?>
