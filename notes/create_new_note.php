@@ -14,14 +14,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
     $uniqueFileName = uniqid('image_', true) . '.' . $fileExtension;
 
+
     $uploadFilePath = $uploadDir . $uniqueFileName;
-    $readDir .= $uniqueFileName;
+    $uploadImgFilePath = $readDir . $uniqueFileName;
 
     if (move_uploaded_file($_FILES['image']['tmp_name'], $uploadFilePath)) {
       $uploadedFilePath = $uploadFilePath;
     } else {
       echo "<script>alert('Error during upload file')</script>";
     }
+  } else {
+    $uploadImgFilePath = "";
   }
 
 
@@ -33,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     'tags' => $tags,
     'content' => $content,
     'tasks' => [],
-    'image' => $readDir,
+    'image' => $uploadImgFilePath,
     'timestamp' => date('Y-m-d H:i:s')
   ];
 
@@ -52,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $noteData = json_encode($note, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
   file_put_contents('./notes/notes/' . $id_note . '.json', $noteData);
 
-  echo "<div class='alert alert-success'>Note saved successfully!</div>";
+  header("Location: view");
 }
 ?>
 
